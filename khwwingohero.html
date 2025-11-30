@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webinar Hero Section</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anjoman:wght@400;600;700;800&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Anjoman', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    @keyframes fadeInUp {
+      0% { 
+        opacity: 0; 
+        transform: translateY(40px) scale(0.95); 
+      }
+      100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+      }
+    }
+    
+    @keyframes glow {
+      0%, 100% { 
+        text-shadow: 0 0 15px rgba(15, 82, 186, 0.4),
+                     0 0 30px rgba(15, 82, 186, 0.2);
+      }
+      50% { 
+        text-shadow: 0 0 25px rgba(15, 82, 186, 0.7),
+                     0 0 50px rgba(15, 82, 186, 0.5),
+                     0 0 70px rgba(15, 82, 186, 0.3);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-15px) rotate(3deg); }
+      66% { transform: translateY(-8px) rotate(-3deg); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { 
+        opacity: 1; 
+        transform: scale(1) rotate(0deg); 
+      }
+      50% { 
+        opacity: 0.7; 
+        transform: scale(1.3) rotate(180deg); 
+      }
+    }
+    
+    @keyframes slideInRight {
+      0% { 
+        opacity: 0; 
+        transform: translateX(-50px); 
+      }
+      100% { 
+        opacity: 1; 
+        transform: translateX(0); 
+      }
+    }
+    
+    @keyframes backgroundShine {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .hero-section {
+      position: relative;
+      background: linear-gradient(135deg, 
+        #ffffff 0%, 
+        #f0f9ff 25%, 
+        #e0f2fe 50%, 
+        #f0f9ff 75%, 
+        #ffffff 100%);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      padding: 60px 20px;
+      text-align: center;
+      overflow: hidden;
+      border-bottom: 3px solid rgba(15, 82, 186, 0.2);
+      min-height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(15, 82, 186, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: float 20s infinite linear;
+      pointer-events: none;
+    }
+    
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 300%;
+      height: 100%;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6) 25%,
+        rgba(255, 255, 255, 0.8) 50%,
+        rgba(255, 255, 255, 0.6) 75%,
+        transparent);
+      animation: backgroundShine 8s infinite;
+      pointer-events: none;
+    }
+    
+    .floating-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .shape {
+      position: absolute;
+      opacity: 0.65;
+      animation: float 12s infinite ease-in-out;
+    }
+    
+    .shape:nth-child(1) {
+      top: 10%;
+      right: 10%;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #0f52ba, #3b82f6);
+      border-radius: 50%;
+      animation-delay: 0s;
+    }
+    
+    .shape:nth-child(2) {
+      top: 50%;
+      right: 75%;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      animation-delay: 2s;
+      animation-duration: 15s;
+    }
+    
+    .shape:nth-child(3) {
+      top: 70%;
+      right: 15%;
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #3b82f6, #0f52ba);
+      border-radius: 50%;
+      animation-delay: 4s;
+      animation-duration: 18s;
+    }
+    
+    .hero-wrapper {
+      position: relative;
+      max-width: 900px;
+      margin: auto;
+      z-index: 10;
+    }
+    
+    .badge-container {
+      display: inline-block;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.2s;
+    }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 8px 20px;
+      border-radius: 50px;
+      border: 2px solid rgba(15, 82, 186, 0.3);
+      box-shadow: 0 8px 30px rgba(15, 82, 186, 0.15);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #0f52ba;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .badge-icon {
+      font-size: 1.1rem;
+    }
+    
+    .hero-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1.5;
+      margin-bottom: 15px;
+      opacity: 0;
+      animation: fadeInUp 1.2s ease-out forwards;
+      animation-delay: 0.4s;
+    }
+    
+    .hero-highlight {
+      position: relative;
+      color: #0f52ba;
+      font-weight: 900;
+      display: inline-block;
+      animation: glow 3s ease-in-out infinite;
+      padding: 2px 12px;
+      border-radius: 8px;
+      background: rgba(6, 182, 212, 0.15);
+    }
+    
+    .hero-highlight::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      right: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        #0f52ba, 
+        transparent);
+      border-radius: 2px;
+      animation: shimmer 3s infinite;
+    }
+    
+    .sparkle {
+      display: inline-block;
+      color: #0f52ba;
+      font-size: 1.3rem;
+      animation: sparkle 2s infinite;
+      margin: 0 5px;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: #374151;
+      margin-top: 12px;
+      font-weight: 600;
+      opacity: 0;
+      animation: fadeInUp 1.5s ease-out forwards;
+      animation-delay: 0.8s;
+      line-height: 1.6;
+    }
+    
+    .celebration-emoji {
+      display: inline-block;
+      font-size: 1.2rem;
+      animation: pulse 1.5s infinite;
+      margin-right: 6px;
+    }
+    
+    .sponsor-badges {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 25px;
+      opacity: 0;
+      animation: slideInRight 1.2s ease-out forwards;
+      animation-delay: 1.2s;
+    }
+    
+    .sponsor-badge {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 10px 25px;
+      border-radius: 15px;
+      border: 2px solid rgba(15, 82, 186, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      font-weight: 700;
+      color: #0f52ba;
+      font-size: 0.95rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .sponsor-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.6), 
+        transparent);
+      transition: right 0.6s;
+    }
+    
+    .sponsor-badge:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 15px 45px rgba(15, 82, 186, 0.25);
+      border-color: #0f52ba;
+    }
+    
+    .sponsor-badge:hover::before {
+      right: 100%;
+    }
+    
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 40px 15px;
+        min-height: 200px;
+      }
+      
+      .hero-title {
+        font-size: 1.25rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 0.95rem;
+      }
+      
+      .badge {
+        font-size: 0.8rem;
+        padding: 6px 16px;
+      }
+      
+      .sponsor-badge {
+        font-size: 0.85rem;
+        padding: 8px 20px;
+      }
+      
+      .sparkle {
+        font-size: 1.1rem;
+      }
+      
+      .shape {
+        opacity: 0.08;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero-section">
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+    
+    <div class="hero-wrapper">
+      <div class="badge-container">
+        <div class="badge">
+          <span class="badge-icon">🎯</span>
+          <span>وبینار ویژه</span>
+        </div>
+      </div>
+      
+      <h1 class="hero-title">
+        <span class="sparkle">✨</span>
+         موسسه <span class="hero-highlight">خانه مالی توسعه با اسپانسرینگ وینگو مارکتز</span><span class="sparkle">✨</span>
+      </h1>
+      
+      <p class="hero-subtitle">
+        <span class="celebration-emoji">🎉</span>
+        این وبینار را تقدیم نگاه شما همراهان عزیز می‌کند
+      </p>
+      
+      <div class="sponsor-badges">
+        <a href="https://khanemali.com/" target="_blank" class="sponsor-badge">🏛️ خانه مالی توسعه</a>
+        <a href="https://client.wingomarkets.com/links/go/1093" target="_blank" class="sponsor-badge">وینگو مارکتز 🍀</a>
+</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
